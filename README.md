@@ -1,6 +1,6 @@
-# 🚀 Portfolio — React + GitHub Pages
+# 🚀 Portofolio — React + GitHub Pages
 
-Dark mode minimalist portfolio for React Native & React JS developer.
+Dark mode minimalist Portofolio for React Native & React JS developer.
 
 ## ✅ Setup
 
@@ -14,7 +14,7 @@ npm start
 ### 1. Edit `package.json`
 Ganti `homepage` dengan username GitHub kamu:
 ```json
-"homepage": "https://YOURUSERNAME.github.io/portfolio"
+"homepage": "https://YOURUSERNAME.github.io/Portofolio"
 ```
 
 ### 2. Install gh-pages
@@ -26,9 +26,9 @@ npm install
 ```bash
 git init
 git add .
-git commit -m "init portfolio"
+git commit -m "init Portofolio"
 git branch -M main
-git remote add origin https://github.com/YOURUSERNAME/portfolio.git
+git remote add origin https://github.com/YOURUSERNAME/Portofolio.git
 git push -u origin main
 ```
 
@@ -37,7 +37,7 @@ git push -u origin main
 npm run deploy
 ```
 
-Selesai! Portofolio live di: `https://YOURUSERNAME.github.io/portfolio`
+Selesai! Portofolio live di: `https://YOURUSERNAME.github.io/Portofolio`
 
 ---
 
