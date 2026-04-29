@@ -367,6 +367,88 @@ const styles = `
     font-size: 12px; margin-top: 2px; flex-shrink: 0; opacity: 0.7;
   }
 
+  /* ── SOLO PROJECT ── */
+  .solo-project {
+    cursor: default !important;
+  }
+  .solo-project-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .solo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: 1px solid rgba(201,169,110,0.25);
+    padding: 3px 10px;
+    margin-bottom: 14px;
+  }
+  .solo-screenshots {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .solo-screenshot {
+    flex: 1;
+    aspect-ratio: 9/19;
+    object-fit: cover;
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    background: var(--bg3);
+    transition: transform 0.35s ease, border-color 0.35s ease;
+    max-height: 340px;
+    width: 100%;
+  }
+  .solo-screenshot:hover {
+    transform: translateY(-4px) scale(1.02);
+    border-color: rgba(201,169,110,0.3);
+  }
+  .solo-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+    padding: 11px 24px;
+    border: 1px solid var(--border2);
+    color: var(--text2);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    transition: all 0.3s;
+    cursor: none;
+  }
+  .solo-download:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+  @media (max-width: 768px) {
+    .solo-project-inner {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .solo-screenshots {
+      gap: 8px;
+    }
+    .solo-screenshot {
+      max-height: 220px;
+    }
+    .solo-download {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
   /* CONTACT */
   .contact-inner { max-width: 740px; }
   .contact-big {
@@ -717,6 +799,18 @@ const skills = [
 
 const projects = [
   {
+    name: "Kalender Tiongkok",
+    desc: "Kalender & widget kalender dengan fitur catatan harian dan konversi ulang tahun dari kalender nasional ke kalender Tiongkok. Data tersimpan secara lokal dengan dukungan backup & import.",
+    tech: ["React Native", "Android", "Widget", "Local Storage"],
+    link: "https://github.com/lieleonardo/portofolio/releases/download/Downloads/KalenderApp.apk",
+    solo: true,
+    screenshots: [
+      "https://github.com/lieleonardo/portofolio/releases/download/Downloads/ss1.png",
+      "https://github.com/lieleonardo/portofolio/releases/download/Downloads/ss2.png",
+      "https://github.com/lieleonardo/portofolio/releases/download/Downloads/ss3.png",
+    ],
+  },
+  {
     name: "Absensi Profitera Mobile",
     desc: "Mobile attendance app built with React Native for PT Asaba. Handles employee check-in/check-out with real-time data sync.",
     tech: ["React Native", "REST API", "Android", "iOS"],
@@ -806,9 +900,9 @@ function FadeSection({ children, className = "" }) {
 
 function MusicPlayer() {
   const [playing, setPlaying] = useState(false);
-  const [volume, setVolume]   = useState(0.6);
-  const [loaded, setLoaded]   = useState(false);
-  const [error, setError]     = useState(null);
+  const [volume, setVolume] = useState(0.6);
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(null);
   const [showHint, setShowHint] = useState(false);
   const audioRef = useRef(null);
 
@@ -817,7 +911,7 @@ function MusicPlayer() {
     if (!audio) return;
 
     audio.volume = volume;
-    audio.loop   = true;
+    audio.loop = true;
 
     const onError = (e) => {
       console.error("Audio error:", e, audio.error);
@@ -829,14 +923,14 @@ function MusicPlayer() {
       if (!audioRef.current) return;
       audioRef.current.play()
         .then(() => { setPlaying(true); setShowHint(false); })
-        .catch(() => {});
+        .catch(() => { });
     };
 
     const onCanPlay = () => {
       setLoaded(true);
       setShowHint(true);
       // Only click/touch can trigger autoplay per browser policy
-      document.addEventListener("click",     tryAutoplay, { once: true });
+      document.addEventListener("click", tryAutoplay, { once: true });
       document.addEventListener("touchstart", tryAutoplay, { once: true });
     };
 
@@ -849,8 +943,8 @@ function MusicPlayer() {
       audio.removeEventListener("canplaythrough", onCanPlay);
       audio.removeEventListener("error", onError);
       audio.removeEventListener("ended", onEnded);
-      document.removeEventListener("click",      tryAutoplay);
-      document.removeEventListener("touchstart",  tryAutoplay);
+      document.removeEventListener("click", tryAutoplay);
+      document.removeEventListener("touchstart", tryAutoplay);
     };
   }, []);
 
@@ -889,48 +983,48 @@ function MusicPlayer() {
 
   return (
     <>
-    <div className={`music-player${playing ? " playing" : ""}`}>
-      <audio ref={audioRef} src={process.env.PUBLIC_URL + "/music/lofi.mp3"} preload="auto" />
+      <div className={`music-player${playing ? " playing" : ""}`}>
+        <audio ref={audioRef} src={process.env.PUBLIC_URL + "/music/lofi.mp3"} preload="auto" />
 
-      <div className={`music-vinyl${playing ? " spinning" : ""}`} />
+        <div className={`music-vinyl${playing ? " spinning" : ""}`} />
 
-      <div className="music-info">
-        <div className="music-title">Lofi Chill</div>
-        <div className="music-status">
-          {!loaded ? "Loading..." : playing ? "Now Playing" : "Paused"}
+        <div className="music-info">
+          <div className="music-title">Lofi Chill</div>
+          <div className="music-status">
+            {!loaded ? "Loading..." : playing ? "Now Playing" : "Paused"}
+          </div>
+        </div>
+
+        <div className="equalizer">
+          {[3, 8, 5, 11].map((h, i) => (
+            <div
+              key={i}
+              className={`eq-bar${playing ? " active" : ""}`}
+              style={{ height: playing ? undefined : h + "px" }}
+            />
+          ))}
+        </div>
+
+        <div className="music-controls">
+          <div className="music-volume">
+            <span className="volume-icon">{volume === 0 ? "🔇" : volume < 0.5 ? "🔉" : "🔊"}</span>
+            <input
+              type="range" className="volume-slider"
+              min="0" max="1" step="0.05"
+              value={volume}
+              onChange={e => setVolume(parseFloat(e.target.value))}
+            />
+          </div>
+          <button
+            className="music-btn play-btn"
+            onClick={toggle}
+            disabled={!loaded}
+            style={{ opacity: loaded ? 1 : 0.4 }}
+          >
+            {playing ? "⏸" : "▶"}
+          </button>
         </div>
       </div>
-
-      <div className="equalizer">
-        {[3, 8, 5, 11].map((h, i) => (
-          <div
-            key={i}
-            className={`eq-bar${playing ? " active" : ""}`}
-            style={{ height: playing ? undefined : h + "px" }}
-          />
-        ))}
-      </div>
-
-      <div className="music-controls">
-        <div className="music-volume">
-          <span className="volume-icon">{volume === 0 ? "🔇" : volume < 0.5 ? "🔉" : "🔊"}</span>
-          <input
-            type="range" className="volume-slider"
-            min="0" max="1" step="0.05"
-            value={volume}
-            onChange={e => setVolume(parseFloat(e.target.value))}
-          />
-        </div>
-        <button
-          className="music-btn play-btn"
-          onClick={toggle}
-          disabled={!loaded}
-          style={{ opacity: loaded ? 1 : 0.4 }}
-        >
-          {playing ? "⏸" : "▶"}
-        </button>
-      </div>
-    </div>
 
       {/* Hint toast */}
       {showHint && !playing && (
@@ -945,10 +1039,10 @@ function MusicPlayer() {
 }
 
 export default function App() {
-  const [scrolled, setScrolled]   = useState(false);
-  const [menuOpen, setMenuOpen]   = useState(false);
-  const [cursor, setCursor]       = useState({ x: 0, y: 0 });
-  const [ring, setRing]           = useState({ x: 0, y: 0 });
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [cursor, setCursor] = useState({ x: 0, y: 0 });
+  const [ring, setRing] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40);
@@ -1054,10 +1148,10 @@ export default function App() {
             </div>
             <div className="about-stats">
               {[
-                { num: "5+",  label: "Years Experience" },
-                { num: "8+",  label: "Projects Shipped"  },
-                { num: "3",   label: "Companies"         },
-                { num: "2",   label: "Degrees"           },
+                { num: "5+", label: "Years Experience" },
+                { num: "8+", label: "Projects Shipped" },
+                { num: "3", label: "Companies" },
+                { num: "2", label: "Degrees" },
               ].map(s => (
                 <div className="stat" key={s.label}>
                   <div className="stat-num">{s.num}</div>
@@ -1095,25 +1189,71 @@ export default function App() {
           <div className="section-eyebrow">Projects</div>
           <h2 className="section-title">Selected work.</h2>
           <div className="projects-list">
-            {projects.map((p, i) => (
-              <a href={p.link} className="project-item" key={p.name}>
-                <div>
-                  <div className="project-num">0{i + 1}</div>
-                  <div className="project-name">{p.name}</div>
-                  <div className="project-desc">{p.desc}</div>
-                  <div className="project-tech">
-                    {p.tech.map(t => <span className="tech-tag" key={t}>{t}</span>)}
+            {projects.map((p, i) =>
+              p.solo ? (
+                <div className="project-item solo-project" key={p.name}>
+                  <div className="solo-project-inner">
+
+                    {/* Kolom kiri: info */}
+                    <div>
+                      <div className="project-num">0{i + 1}</div>
+                      <div className="solo-badge">✦ Solo Project</div>
+                      <div className="project-name">{p.name}</div>
+                      <div className="project-desc">{p.desc}</div>
+                      <div className="project-tech">
+                        {p.tech.map(t => (
+                          <span className="tech-tag" key={t}>{t}</span>
+                        ))}
+                      </div>
+
+                      <a
+                        href={p.link}
+                        className="solo-download"
+                        download
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        ↓ Download APK
+                      </a>
+                    </div>
+
+                    {/* Kolom kanan: screenshots */}
+                    <div className="solo-screenshots">
+                      {p.screenshots.map((src, si) => (
+                        <img
+                          key={si}
+                          src={src}
+                          alt={`${p.name} screenshot ${si + 1}`}
+                          className="solo-screenshot"
+                          loading="lazy"
+                        />
+                      ))}
+                    </div>
+
                   </div>
                 </div>
-                <div className="project-arrow">↗</div>
-              </a>
-            ))}
+              ) : (
+                <a href={p.link} className="project-item" key={p.name}>
+                  <div>
+                    <div className="project-num">0{i + 1}</div>
+                    <div className="project-name">{p.name}</div>
+                    <div className="project-desc">{p.desc}</div>
+                    <div className="project-tech">
+                      {p.tech.map(t => (
+                        <span className="tech-tag" key={t}>{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="project-arrow">↗</div>
+                </a>
+              )
+            )}
           </div>
         </FadeSection>
-      </section>
+      </section >
 
       {/* Experience */}
-      <section id="experience" className="exp-bg">
+      < section id="experience" className="exp-bg" >
         <FadeSection>
           <div className="section-eyebrow">Experience</div>
           <h2 className="section-title">Where I've been.</h2>
@@ -1135,10 +1275,10 @@ export default function App() {
             ))}
           </div>
         </FadeSection>
-      </section>
+      </section >
 
       {/* Contact */}
-      <section id="contact">
+      < section id="contact" >
         <FadeSection>
           <div className="section-eyebrow">Contact</div>
           <div className="contact-inner">
@@ -1156,7 +1296,7 @@ export default function App() {
             </div>
           </div>
         </FadeSection>
-      </section>
+      </section >
 
       <footer>
         <p>© 2026 · Leonardo · Built with React</p>
